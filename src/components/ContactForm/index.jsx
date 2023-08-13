@@ -2,14 +2,15 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
-import { addContact } from 'redux/actions';
+import { selectContacts } from 'redux/selectors';
+
+import { addContact } from 'redux/operations';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const handleNameChange = e => {
@@ -28,7 +29,7 @@ const ContactForm = () => {
     );
     dataOfContact
       ? alert(`${name} is already in contacts`)
-      : dispatch(addContact(name, number));
+      : dispatch(addContact({ name: name, number: number }));
 
     setName('');
     setNumber('');
